@@ -175,6 +175,10 @@ namespace DDNS_With_Cloudflare
         }
         private void button_Update_Click(object sender, EventArgs e)
         {
+            if (CF_AuthEmail_TXT.Text == "" | CF_AuthKey_TXT.Text == "" | CF_DNS_ZONE_ID_TXT.Text == "" | CF_DOMIAN_TXT.Text == "")
+            {
+                return;
+            }
             txt_CurrentIP.Text = GetIPAddress();
             WriteLog("Start..");
             InitTimer();
@@ -230,6 +234,10 @@ namespace DDNS_With_Cloudflare
 
         private void btn_NOW_IP_reload_Click(object sender, EventArgs e)
         {
+            if (CF_AuthEmail_TXT.Text == "" | CF_AuthKey_TXT.Text == "" | CF_DNS_ZONE_ID_TXT.Text == "" | CF_DOMIAN_TXT.Text == "")
+            {
+                return;
+            }
             string CF_AuthEmail = CF_AuthEmail_TXT.Text;
             string CF_AuthKey = CF_AuthKey_TXT.Text;
             string CF_DNS_ZONE_ID = CF_DNS_ZONE_ID_TXT.Text;

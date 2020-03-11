@@ -117,7 +117,6 @@
             this.CF_AuthKey_TXT.Name = "CF_AuthKey_TXT";
             this.CF_AuthKey_TXT.Size = new System.Drawing.Size(274, 26);
             this.CF_AuthKey_TXT.TabIndex = 5;
-            this.CF_AuthKey_TXT.Text = "c02062aefc38219d38f1ae642b4b33021accd";
             // 
             // CF_DNS_ZONE_ID_TXT
             // 
@@ -126,7 +125,6 @@
             this.CF_DNS_ZONE_ID_TXT.Name = "CF_DNS_ZONE_ID_TXT";
             this.CF_DNS_ZONE_ID_TXT.Size = new System.Drawing.Size(274, 26);
             this.CF_DNS_ZONE_ID_TXT.TabIndex = 5;
-            this.CF_DNS_ZONE_ID_TXT.Text = "5c3348bf45f617e0f69438a26240e0dd";
             // 
             // CF_AuthEmail_TXT
             // 
@@ -135,7 +133,6 @@
             this.CF_AuthEmail_TXT.Name = "CF_AuthEmail_TXT";
             this.CF_AuthEmail_TXT.Size = new System.Drawing.Size(274, 26);
             this.CF_AuthEmail_TXT.TabIndex = 5;
-            this.CF_AuthEmail_TXT.Text = "mythetooi@gmail.com";
             // 
             // CF_AuthKey
             // 
@@ -174,7 +171,6 @@
             this.CF_DOMIAN_TXT.Name = "CF_DOMIAN_TXT";
             this.CF_DOMIAN_TXT.Size = new System.Drawing.Size(274, 26);
             this.CF_DOMIAN_TXT.TabIndex = 5;
-            this.CF_DOMIAN_TXT.Text = "mah-noii.info";
             // 
             // CF_DOMIAN
             // 
