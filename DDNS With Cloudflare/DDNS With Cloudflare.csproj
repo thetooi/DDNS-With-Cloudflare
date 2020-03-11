@@ -115,6 +115,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icons8-color-48.ico" />
+    <None Include="Resources\reload-icon.png" />
+    <None Include="Resources\converseen-icon.png" />
     <None Include="Resources\cf-logo-h-rgb.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
