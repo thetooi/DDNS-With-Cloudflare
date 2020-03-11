@@ -146,7 +146,8 @@ namespace DDNS_With_Cloudflare
             {
                 { "type", "A" },
                 { "name", "" + CF_DOMIAN + "" },
-                { "content", publicIpAddress.Trim() } // Trim Public IP Address Variable
+                { "content", publicIpAddress.Trim() }, // Trim Public IP Address Variable
+                { "proxied", "true" }
             };
                 string jsonPostData = JsonConvert.SerializeObject(jsonData);
 

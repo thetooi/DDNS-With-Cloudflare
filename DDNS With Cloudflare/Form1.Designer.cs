@@ -58,7 +58,7 @@
             // 
             // txt_CurrentIP
             // 
-            this.txt_CurrentIP.BackColor = System.Drawing.Color.Green;
+            this.txt_CurrentIP.BackColor = System.Drawing.Color.PaleTurquoise;
             this.txt_CurrentIP.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.txt_CurrentIP.Location = new System.Drawing.Point(253, 32);
             this.txt_CurrentIP.MaxLength = 15;
@@ -192,11 +192,12 @@
             // 
             // txt_Status
             // 
+            this.txt_Status.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txt_Status.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.txt_Status.Location = new System.Drawing.Point(220, 260);
             this.txt_Status.Name = "txt_Status";
             this.txt_Status.ReadOnly = true;
-            this.txt_Status.Size = new System.Drawing.Size(52, 31);
+            this.txt_Status.Size = new System.Drawing.Size(52, 24);
             this.txt_Status.TabIndex = 9;
             this.txt_Status.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
