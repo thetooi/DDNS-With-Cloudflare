@@ -134,7 +134,7 @@ namespace DDNS_With_Cloudflare
                     }
                 }
                 dynamic zoneResult = JsonConvert.DeserializeObject(srZoneResult);
-                string zoneId = zoneResult.result[0].id;
+                string CF_DNS_RECORD_ID = zoneResult.result[0].id;
                 //CF_DNS_RECORD_ID_TXT.Text = zoneId;
                 //WriteLog("DNS_RECORD_ID....OK");
                 string publicIpAddress = GetIPAddress(); // Get Public IP of my Home Server
@@ -149,7 +149,7 @@ namespace DDNS_With_Cloudflare
             };
                 string jsonPostData = JsonConvert.SerializeObject(jsonData);
 
-                string data = PutJsonDataToApi(CF_ApiUrl, CF_AuthEmail, CF_AuthKey, CF_DNS_ZONE_ID, zoneId, jsonPostData);
+                string data = PutJsonDataToApi(CF_ApiUrl, CF_AuthEmail, CF_AuthKey, CF_DNS_ZONE_ID, CF_DNS_RECORD_ID, jsonPostData);
                 string[] arr = data.Split(',');
                 if (arr[0] == "True")
                 {
