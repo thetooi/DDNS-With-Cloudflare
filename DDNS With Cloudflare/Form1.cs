@@ -109,7 +109,7 @@ namespace DDNS_With_Cloudflare
         {
             //timer1 = new Timer();
             timer1.Tick += new EventHandler(timer1_Tick);
-            timer1.Interval = 30000; // in miliseconds
+            timer1.Interval = 300000; // in miliseconds
             timer1.Start();
         }
         public void DNSUpdate()
