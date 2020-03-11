@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Reflection;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace DDNS_With_Cloudflare
@@ -14,6 +15,8 @@ namespace DDNS_With_Cloudflare
         {
             InitializeComponent();
         }
+
+        public string CF_ApiUrl = "https://api.cloudflare.com/client/v4/";
 
         public static string GetIPAddress()
         {
@@ -66,8 +69,8 @@ namespace DDNS_With_Cloudflare
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Accept = "*/*";
             httpWebRequest.Method = "PUT";
-            httpWebRequest.Headers.Add("X-Auth-Email", authEmail);
-            httpWebRequest.Headers.Add("X-Auth-Key", authKey);
+            httpWebRequest.Headers.Add("X-Auth-Email", authEmail.ToString());
+            httpWebRequest.Headers.Add("X-Auth-Key", authKey.ToString());
 
             using (StreamWriter streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
@@ -102,24 +105,51 @@ namespace DDNS_With_Cloudflare
 
         private void button_Update_Click(object sender, EventArgs e)
         {
-            string CF_ApiUrl = "https://api.cloudflare.com/client/v4/";
-            string CF_AuthEmail = CF_AuthEmail_TXT.ToString();
-            string CF_AuthKey = CF_AuthKey_TXT.ToString();
-            string CF_DNS_ZONE_ID = CF_DNS_ZONE_ID_TXT.ToString();
-            string CF_DNS_RECORD_ID = CF_DNS_RECORD_ID_TXT.ToString();
+            string CF_AuthEmail = CF_AuthEmail_TXT.Text;
+            string CF_AuthKey = CF_AuthKey_TXT.Text;
+            string CF_DNS_ZONE_ID = CF_DNS_ZONE_ID_TXT.Text;
+            string CF_DNS_RECORD_ID = CF_DNS_RECORD_ID_TXT.Text;
+            string CF_DOMIAN = CF_DOMIAN_TXT.Text;
 
-            string publicIpAddress = GetIPAddress(); // Get Public IP of my Home Server
-            txt_CurrentIP.Text = GetIPAddress();
+            HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(CF_ApiUrl + "zones/" + CF_DNS_ZONE_ID + "/dns_records?type=A&name=" + CF_DOMIAN);
+            httpWebRequest.ReadWriteTimeout = 100000;
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Method = "GET";
+            httpWebRequest.Headers.Add("X-Auth-Email", CF_AuthEmail.ToString());
+            httpWebRequest.Headers.Add("X-Auth-Key", CF_AuthKey.ToString());
 
-            // Build a JSON string to PUT to CloudFlare API
-            Dictionary<string, string> jsonData = new Dictionary<string, string>();
-            jsonData.Add("type", "A");
-            jsonData.Add("name", "" + CF_DOMIAN_TXT + "");
-            jsonData.Add("content", publicIpAddress.Trim()); // Trim Public IP Address Variable
-            string jsonPostData = JsonConvert.SerializeObject(jsonData);
+            try
+            {
+                string srZoneResult;
+                using (WebResponse response = httpWebRequest.GetResponse())
+                {
+                    using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
+                    {
+                        srZoneResult = (streamReader.ReadToEnd());
+                    }
+                }
+                dynamic zoneResult = JsonConvert.DeserializeObject(srZoneResult);
+                string zoneId = zoneResult.result[0].id;
+                CF_DNS_RECORD_ID_TXT.Text = zoneId;
+                LogWrite("DNS_RECORD_ID....OK");
+                string publicIpAddress = GetIPAddress(); // Get Public IP of my Home Server
+                txt_CurrentIP.Text = GetIPAddress();
 
-            WriteLog(PutJsonDataToApi(CF_ApiUrl, CF_AuthEmail, CF_AuthKey, CF_DNS_ZONE_ID, CF_DNS_RECORD_ID, jsonPostData));
+                // Build a JSON string to PUT to CloudFlare API
+                Dictionary<string, string> jsonData = new Dictionary<string, string>
+            {
+                { "type", "A" },
+                { "name", "" + CF_DOMIAN + "" },
+                { "content", publicIpAddress.Trim() } // Trim Public IP Address Variable
+            };
+                string jsonPostData = JsonConvert.SerializeObject(jsonData);
 
+                WriteLog(PutJsonDataToApi(CF_ApiUrl, CF_AuthEmail, CF_AuthKey, CF_DNS_ZONE_ID, zoneId, jsonPostData));
+            }
+            catch (Exception ex)
+            {
+                LogWrite(ex.ToString());
+            }
         }
     }
 }
