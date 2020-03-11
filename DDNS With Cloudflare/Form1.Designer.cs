@@ -45,6 +45,9 @@
             this.CF_DOMIAN_TXT = new System.Windows.Forms.TextBox();
             this.CF_DOMIAN = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.txt_Last_update = new System.Windows.Forms.TextBox();
+            this.txt_Status = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupLog.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -66,11 +69,11 @@
             // 
             this.label_currentIP.AutoSize = true;
             this.label_currentIP.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label_currentIP.Location = new System.Drawing.Point(199, 35);
+            this.label_currentIP.Location = new System.Drawing.Point(150, 35);
             this.label_currentIP.Name = "label_currentIP";
-            this.label_currentIP.Size = new System.Drawing.Size(92, 25);
+            this.label_currentIP.Size = new System.Drawing.Size(141, 25);
             this.label_currentIP.TabIndex = 2;
-            this.label_currentIP.Text = "IP Now:";
+            this.label_currentIP.Text = "You IP Now:";
             // 
             // txt_Log
             // 
@@ -80,7 +83,7 @@
             this.txt_Log.Name = "txt_Log";
             this.txt_Log.ReadOnly = true;
             this.txt_Log.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txt_Log.Size = new System.Drawing.Size(189, 397);
+            this.txt_Log.Size = new System.Drawing.Size(263, 397);
             this.txt_Log.TabIndex = 0;
             // 
             // groupLog
@@ -88,7 +91,7 @@
             this.groupLog.Controls.Add(this.txt_Log);
             this.groupLog.Location = new System.Drawing.Point(518, 12);
             this.groupLog.Name = "groupLog";
-            this.groupLog.Size = new System.Drawing.Size(201, 423);
+            this.groupLog.Size = new System.Drawing.Size(275, 423);
             this.groupLog.TabIndex = 3;
             this.groupLog.TabStop = false;
             this.groupLog.Text = "Log";
@@ -96,9 +99,9 @@
             // button_Update
             // 
             this.button_Update.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.button_Update.Location = new System.Drawing.Point(366, 255);
+            this.button_Update.Location = new System.Drawing.Point(366, 260);
             this.button_Update.Name = "button_Update";
-            this.button_Update.Size = new System.Drawing.Size(128, 45);
+            this.button_Update.Size = new System.Drawing.Size(128, 31);
             this.button_Update.TabIndex = 1;
             this.button_Update.Text = "UPDATE DNS";
             this.button_Update.UseVisualStyleBackColor = true;
@@ -129,6 +132,7 @@
             this.CF_DNS_RECORD_ID_TXT.Name = "CF_DNS_RECORD_ID_TXT";
             this.CF_DNS_RECORD_ID_TXT.Size = new System.Drawing.Size(274, 26);
             this.CF_DNS_RECORD_ID_TXT.TabIndex = 5;
+            this.CF_DNS_RECORD_ID_TXT.Visible = false;
             // 
             // CF_AuthEmail_TXT
             // 
@@ -168,6 +172,7 @@
             this.CF_DNS_RECORD_ID.Size = new System.Drawing.Size(178, 20);
             this.CF_DNS_RECORD_ID.TabIndex = 6;
             this.CF_DNS_RECORD_ID.Text = "CF_DNS_RECORD_ID";
+            this.CF_DNS_RECORD_ID.Visible = false;
             // 
             // CF_AuthEmail
             // 
@@ -208,11 +213,41 @@
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
             // 
+            // txt_Last_update
+            // 
+            this.txt_Last_update.Location = new System.Drawing.Point(220, 352);
+            this.txt_Last_update.Name = "txt_Last_update";
+            this.txt_Last_update.ReadOnly = true;
+            this.txt_Last_update.Size = new System.Drawing.Size(274, 20);
+            this.txt_Last_update.TabIndex = 8;
+            // 
+            // txt_Status
+            // 
+            this.txt_Status.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txt_Status.Location = new System.Drawing.Point(220, 260);
+            this.txt_Status.Name = "txt_Status";
+            this.txt_Status.ReadOnly = true;
+            this.txt_Status.Size = new System.Drawing.Size(52, 31);
+            this.txt_Status.TabIndex = 9;
+            this.txt_Status.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(149, 355);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(65, 13);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Last Update";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(731, 450);
+            this.ClientSize = new System.Drawing.Size(805, 450);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.txt_Status);
+            this.Controls.Add(this.txt_Last_update);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.CF_DOMIAN);
             this.Controls.Add(this.CF_AuthEmail);
@@ -261,6 +296,9 @@
         private System.Windows.Forms.TextBox CF_DOMIAN_TXT;
         private System.Windows.Forms.Label CF_DOMIAN;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.TextBox txt_Last_update;
+        private System.Windows.Forms.TextBox txt_Status;
+        private System.Windows.Forms.Label label1;
     }
 }
 

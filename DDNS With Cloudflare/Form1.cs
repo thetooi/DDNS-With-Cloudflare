@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Reflection;
@@ -28,7 +29,8 @@ namespace DDNS_With_Cloudflare
         public void WriteLog(string logMessage)
         {
             LogWrite(logMessage);
-            txt_Log.AppendText(logMessage);
+            txt_Log.AppendText(Environment.NewLine);
+            txt_Log.AppendText(logMessage);  
         }
         public void LogWrite(string logMessage)
         {
@@ -86,8 +88,11 @@ namespace DDNS_With_Cloudflare
             {
                 HttpWebResponse resp = (HttpWebResponse)httpWebRequest.GetResponse();
                 string respStr = new StreamReader(resp.GetResponseStream()).ReadToEnd();
-
-                res = "Response : " + respStr; // Output response to Console Window
+                dynamic Result = JsonConvert.DeserializeObject(respStr);
+                string success = Result.success;
+                string modified_on = Result.result.modified_on;
+                res = success + "," + modified_on; // Output response to Console Window
+                //res = success;
             }
             catch (Exception ex)
             {
@@ -108,7 +113,7 @@ namespace DDNS_With_Cloudflare
             string CF_AuthEmail = CF_AuthEmail_TXT.Text;
             string CF_AuthKey = CF_AuthKey_TXT.Text;
             string CF_DNS_ZONE_ID = CF_DNS_ZONE_ID_TXT.Text;
-            string CF_DNS_RECORD_ID = CF_DNS_RECORD_ID_TXT.Text;
+            //string CF_DNS_RECORD_ID = CF_DNS_RECORD_ID_TXT.Text;
             string CF_DOMIAN = CF_DOMIAN_TXT.Text;
 
             HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(CF_ApiUrl + "zones/" + CF_DNS_ZONE_ID + "/dns_records?type=A&name=" + CF_DOMIAN);
@@ -130,8 +135,8 @@ namespace DDNS_With_Cloudflare
                 }
                 dynamic zoneResult = JsonConvert.DeserializeObject(srZoneResult);
                 string zoneId = zoneResult.result[0].id;
-                CF_DNS_RECORD_ID_TXT.Text = zoneId;
-                LogWrite("DNS_RECORD_ID....OK");
+                //CF_DNS_RECORD_ID_TXT.Text = zoneId;
+                //WriteLog("DNS_RECORD_ID....OK");
                 string publicIpAddress = GetIPAddress(); // Get Public IP of my Home Server
                 txt_CurrentIP.Text = GetIPAddress();
 
@@ -144,11 +149,26 @@ namespace DDNS_With_Cloudflare
             };
                 string jsonPostData = JsonConvert.SerializeObject(jsonData);
 
-                WriteLog(PutJsonDataToApi(CF_ApiUrl, CF_AuthEmail, CF_AuthKey, CF_DNS_ZONE_ID, zoneId, jsonPostData));
+                string data = PutJsonDataToApi(CF_ApiUrl, CF_AuthEmail, CF_AuthKey, CF_DNS_ZONE_ID, zoneId, jsonPostData);
+                string[] arr = data.Split(',');
+                if (arr[0] == "True")
+                {
+                    txt_Status.Text = "OK";
+                    txt_Status.BackColor = Color.Green;
+                    txt_Last_update.Text = arr[1];
+                    WriteLog("[OK].." + publicIpAddress + "@" + arr[1]);
+                }
+                else
+                {
+                    txt_Status.Text = "NG";
+                    txt_Status.BackColor = Color.Red;
+                }
             }
             catch (Exception ex)
             {
-                LogWrite(ex.ToString());
+                txt_Status.Text = "NG";
+                txt_Status.BackColor = Color.Red;
+                WriteLog("[NG].." + ex.ToString());
             }
         }
     }
