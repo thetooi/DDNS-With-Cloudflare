@@ -21,9 +21,18 @@ namespace DDNS_With_Cloudflare
 
         public static string GetIPAddress()
         {
-            WebClient webClient = new WebClient();
-            string resIP = webClient.DownloadString("https://icanhazip.com/");
-            string ip = Regex.Replace(resIP, @"\s+", "");
+            string ip;
+            try
+            {
+                WebClient webClient = new WebClient();
+                string resIP = webClient.DownloadString("https://ip4.icanhazip.com/");
+                ip = Regex.Replace(resIP, @"\s+", "");
+            }
+            catch(Exception)
+            {
+                ip = "8.8.8.8";
+            }
+            
             return ip;
         }
 
@@ -53,12 +62,8 @@ namespace DDNS_With_Cloudflare
         {
             try
             {
-                txtWriter.Write("\r\nLog Entry : ");
-                txtWriter.WriteLine("{0} {1}", DateTime.Now.ToLongTimeString(),
-                    DateTime.Now.ToLongDateString());
-                txtWriter.WriteLine("  :");
-                txtWriter.WriteLine("  :{0}", logMessage);
-                txtWriter.WriteLine("-------------------------------");
+                txtWriter.WriteLine("\r\n{0} {1}:{2}", DateTime.Now.ToLongTimeString(), DateTime.Now.ToLongDateString(), logMessage);
+                //txtWriter.WriteLine("-------------------------------");
             }
             catch (Exception)
             {
@@ -180,16 +185,6 @@ namespace DDNS_With_Cloudflare
             {
                 return;
             }
-            txt_CurrentIP.Text = GetIPAddress();
-            WriteLog("Start..");
-            InitTimer();
-            button_Update.Text = "Running..";
-            button_Update.Enabled = false;
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            txt_CurrentIP.Text = GetIPAddress();
             string CF_AuthEmail = CF_AuthEmail_TXT.Text;
             string CF_AuthKey = CF_AuthKey_TXT.Text;
             string CF_DNS_ZONE_ID = CF_DNS_ZONE_ID_TXT.Text;
@@ -221,6 +216,16 @@ namespace DDNS_With_Cloudflare
             {
                 WriteLog("[NG].." + ex.ToString());
             }
+            txt_CurrentIP.Text = GetIPAddress();
+            WriteLog("Start..");
+            InitTimer();
+            button_Update.Text = "Running..";
+            button_Update.Enabled = false;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            txt_CurrentIP.Text = GetIPAddress();
             if (txt_Now_IP.Text != txt_CurrentIP.Text)
             {
                 DNSUpdate();
